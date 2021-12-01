@@ -1,4 +1,5 @@
 import random
+import sys
 from terminaltables import AsciiTable
 
 """
@@ -50,7 +51,6 @@ def main():
         else: index += 1
 
 
-
 """
 Game setup determines how many players are involved in pig and 
 returns a dictionary with all the players and the initalised score of zero
@@ -58,13 +58,31 @@ returns a dictionary with all the players and the initalised score of zero
 def game_setup():
     score = {}
 
-    welcome_message = """Welcome To Pig Dice Game\n\nTo Get Started Please Enter The Number Of Players Participating\n\nPlayers: """
+    welcome_message = """Welcome To Pig Dice Game\n\nTo Get Started Please Enter The Number Of Players Participating (Minimum 2 Players)\n\nPlayers: """
 
     # Gather the number of players from user input
-    number_of_players = int(input(welcome_message))
+    number_of_players = input(welcome_message)
+
+    # If the number of players is less than 2 then ask the user to enter the appropriate amount
+    if int(number_of_players) <= 1:
+        while True:
+            number_of_players = input("\nThis Game Requies a Minimum Of Two Players\n\nPlease Enter The Appropriate Amount:")
+            if number_of_players.strip().isdigit():
+                if int(number_of_players) <= 1:
+                    continue
+                else:
+                    break
+
+            # If the input is not a digit run the quit game function 
+            if quit_game():
+                #  If true then exit out the program
+                sys.exit(0)
+
+
+        
 
     # Create each player then add them to the dictionary 
-    for num in range(number_of_players):
+    for num in range(int(number_of_players)):
         number = num + 1
         player_name = f"Player {number}"
 
